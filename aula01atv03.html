@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      let numero = prompt("Digite um número inteiro positivo:")
+
+      numero = parseInt(numero)
+
+      if (Number.isInteger(numero) && numero > 0) {
+        if (numero % 2 === 0) {
+          alert(numero + " é um número par.")
+        } else {
+          alert(numero + " é um número ímpar.")
+        }
+      } else {
+        alert("Valor inválido. Por favor, digite um número inteiro positivo.")
+      }
+    </script>
+  </head>
+  <body></body>
+</html>
