@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista ordenada</title>
+    <script defer>
+      var valores = []
+
+      function adicionarValor() {
+        var novoValor = document.getElementById("valor").value
+        valores.push(novoValor)
+        valores.sort()
+        atualizarListaValores()
+      }
+
+      function atualizarListaValores() {
+        var lista = document.getElementById("listaValores")
+
+        lista.innerHTML = ""
+
+        for (var i = 0; i < valores.length; i++) {
+          var valor = valores[i]
+          var itemLista = document.createElement("li")
+          itemLista.appendChild(document.createTextNode(valor))
+          lista.appendChild(itemLista)
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <form>
+      <input type="text" id="valor" name="valor" />
+      <button type="button" onclick="adicionarValor()">Adicionar</button>
+    </form>
+
+    <ol id="listaValores"></ol>
+  </body>
+</html>
