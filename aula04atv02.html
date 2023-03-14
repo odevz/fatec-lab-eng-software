@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>TODO List</title>
+    <style>
+      form {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input[type="text"] {
+        padding: 5px;
+        width: 300px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 5px;
+      }
+
+      li.completed span {
+        text-decoration: line-through;
+      }
+
+      .buttons {
+        margin-left: 5px;
+      }
+
+      .buttons button {
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <label for="new-item">Nova Tarefa:</label>
+      <input type="text" id="new-item" />
+      <button type="submit">Adicionar</button>
+    </form>
+    <ul id="todo-list"></ul>
+    <script>
+      class TodoList {
+        constructor() {
+          this.items = []
+        }
+
+        addItem(text) {
+          this.items.push({
+            text,
+            completed: false,
+          })
+        }
+
+        removeItem(index) {
+          this.items.splice(index, 1)
+        }
+
+        toggleItemCompleted(index) {
+          this.items[index].completed = !this.items[index].completed
+        }
+
+        moveItem(index, direction) {
+          const newIndex = direction === "up" ? index - 1 : index + 1
+          if (newIndex >= 0 && newIndex < this.items.length) {
+            const item = this.items[index]
+            this.items.splice(index, 1)
+            this.items.splice(newIndex, 0, item)
+          }
+        }
+
+        renderItems() {
+          const list = document.getElementById("todo-list")
+          list.innerHTML = ""
+          this.items.forEach((item, index) => {
+            const li = document.createElement("li")
+            if (item.completed) {
+              li.classList.add("completed")
+            }
+            const span = document.createElement("span")
+            span.innerText = item.text
+            const upButton = document.createElement("button")
+            upButton.innerText = "▲"
+            upButton.disabled = index === 0
+            upButton.addEventListener("click", () => {
+              this.moveItem(index, "up")
+              this.renderItems()
+            })
+            const downButton = document.createElement("button")
+            downButton.innerText = "▼"
+            downButton.disabled = index === this.items.length - 1
+            downButton.addEventListener("click", () => {
+              this.moveItem(index, "down")
+              this.renderItems()
+            })
+            const buttons = document.createElement("div")
+            buttons.classList.add("buttons")
+            buttons.appendChild(upButton)
+            buttons.appendChild(downButton)
+            const removeButton = document.createElement("button")
+            removeButton.innerText = "Remover"
+            removeButton.addEventListener("click", () => {
+              this.removeItem(index)
+              this.renderItems()
+            })
+            li.appendChild(span)
+            li.appendChild(buttons)
+            li.appendChild(removeButton)
+            list.appendChild(li)
+          })
+        }
+      }
+
+      const form = document.querySelector("form")
+      const input = document.querySelector("input")
+      const todoList = new TodoList()
+
+      form.addEventListener("submit", event => {
+        event.preventDefault()
+        const text = input.value.trim()
+        if (text) {
+          todoList.addItem(text)
+          todoList.renderItems()
+          input.value = ""
+        }
+      })
+
+      todoList.renderItems()
+    </script>
+  </body>
+</html>

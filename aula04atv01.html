@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Formulário</title>
+  </head>
+  <body>
+    <h1>Formulário</h1>
+    <form>
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" /><br />
+
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" /><br />
+
+      <label for="data_nascimento">Data de Nascimento:</label>
+      <input type="date" id="data_nascimento" name="data_nascimento" /><br />
+
+      <label for="telefone_fixo">Telefone Fixo:</label>
+      <input type="tel" id="telefone_fixo" name="telefone_fixo" /><br />
+
+      <label for="telefone_celular">Telefone Celular:</label>
+      <input type="tel" id="telefone_celular" name="telefone_celular" /><br />
+
+      <input type="radio" id="aluno" name="tipo_usuario" value="aluno" />
+      <label for="aluno">Aluno</label>
+
+      <input type="radio" id="professor" name="tipo_usuario" value="professor" />
+      <label for="professor">Professor</label><br />
+
+      <div id="campo_area" style="display: none">
+        <label for="area">Área:</label>
+        <input type="text" id="area" name="area" /><br />
+
+        <label for="matricula">Matrícula:</label>
+        <input type="text" id="matricula" name="matricula" /><br />
+
+        <label for="lattes">Lattes:</label>
+        <input type="text" id="lattes" name="lattes" /><br />
+      </div>
+
+      <div id="campo_curso" style="display: none">
+        <label for="curso">Curso:</label>
+        <input type="text" id="curso" name="curso" /><br />
+
+        <label for="matricula">Matrícula:</label>
+        <input type="text" id="matricula" name="matricula" /><br />
+      </div>
+
+      <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+      class Formulario {
+        constructor() {
+          this.nome = ""
+          this.email = ""
+          this.dataNascimento = ""
+          this.telefoneFixo = ""
+          this.telefoneCelular = ""
+          this.area = ""
+          this.matricula = ""
+          this.lattes = ""
+          this.curso = ""
+        }
+
+        mostrarCamposAluno() {
+          document.getElementById("campo_area").style.display = "none"
+          document.getElementById("campo_curso").style.display = "block"
+        }
+      }
+
+      class Professor {
+        constructor() {
+          this.area = ""
+          this.matricula = ""
+          this.lattes = ""
+        }
+
+        mostrarCampos() {
+          document.getElementById("campo_area").style.display = "block"
+          document.getElementById("campo_curso").style.display = "none"
+        }
+      }
+
+      class Aluno {
+        constructor() {
+          this.curso = ""
+          this.matricula = ""
+        }
+
+        mostrarCampos() {
+          document.getElementById("campo_curso").style.display = "block"
+          document.getElementById("campo_area").style.display = "none"
+        }
+      }
+
+      const formulario = new Formulario()
+      const professor = new Professor()
+      const aluno = new Aluno()
+
+      const radioAluno = document.getElementById("aluno")
+      radioAluno.addEventListener("click", aluno.mostrarCampos.bind(aluno))
+
+      const radioProfessor = document.getElementById("professor")
+      radioProfessor.addEventListener("click", professor.mostrarCampos.bind(professor))
+
+      const form = document.querySelector("form")
+      form.addEventListener("submit", function (event) {
+        event.preventDefault()
+
+        formulario.nome = document.getElementById("nome").value
+        formulario.email = document.getElementById("email").value
+        formulario.dataNascimento = document.getElementById("data_nascimento").value
+        formulario.telefoneFixo = document.getElementById("telefone_fixo").value
+        formulario.telefoneCelular = document.getElementById("telefone_celular").value
+        formulario.area = document.getElementById("area").value
+        formulario.matricula = document.getElementById("matricula").value
+        formulario.lattes = document.getElementById("lattes").value
+        formulario.curso = document.getElementById("curso").value
+
+        console.log(formulario)
+      })
+    </script>
+  </body>
+</html>
