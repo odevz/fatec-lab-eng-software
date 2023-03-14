@@ -56,16 +56,11 @@
         addItem(text) {
           this.items.push({
             text,
-            completed: false,
           })
         }
 
         removeItem(index) {
           this.items.splice(index, 1)
-        }
-
-        toggleItemCompleted(index) {
-          this.items[index].completed = !this.items[index].completed
         }
 
         moveItem(index, direction) {
@@ -80,13 +75,16 @@
         renderItems() {
           const list = document.getElementById("todo-list")
           list.innerHTML = ""
+
           this.items.forEach((item, index) => {
             const li = document.createElement("li")
             if (item.completed) {
               li.classList.add("completed")
             }
+
             const span = document.createElement("span")
             span.innerText = item.text
+
             const upButton = document.createElement("button")
             upButton.innerText = "▲"
             upButton.disabled = index === 0
@@ -94,6 +92,7 @@
               this.moveItem(index, "up")
               this.renderItems()
             })
+
             const downButton = document.createElement("button")
             downButton.innerText = "▼"
             downButton.disabled = index === this.items.length - 1
@@ -101,10 +100,12 @@
               this.moveItem(index, "down")
               this.renderItems()
             })
+
             const buttons = document.createElement("div")
             buttons.classList.add("buttons")
             buttons.appendChild(upButton)
             buttons.appendChild(downButton)
+
             const removeButton = document.createElement("button")
             removeButton.innerText = "Remover"
             removeButton.addEventListener("click", () => {
